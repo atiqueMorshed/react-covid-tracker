@@ -1,0 +1,20 @@
+.liveCasesByCountry__card__content__container {
+  height: 400px;
+  overflow: hidden;
+}
+
+.LiveCasesByCountry__card__content__container__single {
+  display: flex;
+  justify-content: space-between;
+
+  &:nth-child(odd) {
+    background-color: rgb(245, 245, 245);
+  }
+  & p {
+    padding: 0.5rem;
+  }
+}
+
+// .LiveCasesByCountry__card__content__container__single:nth-child(odd) {
+//   background-color: rgb(245, 245, 245);
+// }

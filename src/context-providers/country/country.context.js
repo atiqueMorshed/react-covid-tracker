@@ -2,39 +2,59 @@ import { createContext, useState, useEffect } from "react";
 
 export const CountryContext = createContext({
   countries: [],
-  selectedCountry: null,
+  selectedCountry: "worldwide",
   selectCountry: () => {},
+  countryInfo: null,
 });
 
 const CountryProvider = ({ children }) => {
   const [countries, setCountries] = useState();
-  const [country, setCountry] = useState("worldwide");
+  const [selectedCountry, setSelectedCountry] = useState("worldwide");
+  const [countriesInfo, setCountriesInfo] = useState([]);
+  const [countryInfo, setCountryInfo] = useState({});
 
-  const selectCountry = (event) => {
-    console.log("Setting country in CountryProvider!");
-    setCountry(event.target.value);
+  const selectCountry = async (event) => {
+    setSelectedCountry(event.target.value);
   };
 
   useEffect(() => {
     const getCountriesData = async () => {
       const response = await fetch("https://disease.sh/v3/covid-19/countries");
-      console.log("Fetching countries!");
+      console.log("CountryContext fetching countries!");
       const data = await response.json();
       const countries = data.map((cnt) => ({
         country: cnt.country,
         value: cnt.countryInfo.iso2,
       }));
+      setSelectedCountry("worldwide");
       setCountries(countries);
+      setCountriesInfo(data);
     };
     getCountriesData();
   }, []);
+
+  useEffect(() => {
+    console.log("CountryContext selected country: ", selectedCountry);
+    const getInitialWorldwideData = async () => {
+      const url =
+        selectedCountry === "worldwide"
+          ? "https://disease.sh/v3/covid-19/all"
+          : `https://disease.sh/v3/covid-19/countries/${selectedCountry}?strict=true`;
+      const response = await fetch(url);
+      const data = await response.json();
+      setCountryInfo(data);
+    };
+    getInitialWorldwideData();
+  }, [selectedCountry]);
 
   return (
     <CountryContext.Provider
       value={{
         countries,
-        country,
+        selectedCountry,
+        countryInfo,
         selectCountry,
+        countriesInfo,
       }}
     >
       {children}

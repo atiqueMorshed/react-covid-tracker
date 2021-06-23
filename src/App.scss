@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+}
+
+body {
+  background-color: #f5f6fa;
+  box-sizing: border-box;
+}
+
+.app {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 60px 180px 240px 500px;
+  grid-gap: 10px;
+  padding: 20px;
+
+  .app__appHeader {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+
+  .app__infoBoxCollection {
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+  .app__map {
+    grid-column: 1/2;
+    grid-row: 3/6;
+    background-color: red;
+  }
+
+  .app__liveCasesByCountry {
+    grid-column: 2/3;
+    grid-row: 1/4;
+  }
+  .app__worldWideNewCases {
+    grid-column: 2/3;
+    grid-row: 4/6;
+  }
+}

@@ -9,11 +9,9 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <CountryProvider>
-      <App />
-    </CountryProvider>
-  </React.StrictMode>,
+  <CountryProvider>
+    <App />
+  </CountryProvider>,
   document.getElementById("root")
 );
 

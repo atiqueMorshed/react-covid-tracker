@@ -7,15 +7,20 @@ import { FormControl, Select, MenuItem } from "@material-ui/core";
 import "./app-header.styles.scss";
 
 const AppHeader = () => {
-  const { countries, country, selectCountry } = useContext(CountryContext);
+  const { countries, selectedCountry, selectCountry } =
+    useContext(CountryContext);
 
-  console.log("Rendering AppHeader");
-  return (
-    <div className="app">
-      <div className="app__header">
+  if (selectedCountry) {
+    return (
+      <div className="appHeader">
+        {console.log("Rendering AppHeader", selectedCountry)}
         <h1>Covid-19 Tracker</h1>
-        <FormControl className="app__dropdown">
-          <Select variant="outlined" value={country} onChange={selectCountry}>
+        <FormControl className="appHeader__dropdown">
+          <Select
+            variant="outlined"
+            value={selectedCountry}
+            onChange={selectCountry}
+          >
             <MenuItem value="worldwide">Worldwide</MenuItem>
             {countries
               ? countries.map((cnt) => (
@@ -25,8 +30,10 @@ const AppHeader = () => {
           </Select>
         </FormControl>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <p>Loading...</p>;
+  }
 };
 
 export default React.memo(AppHeader);
